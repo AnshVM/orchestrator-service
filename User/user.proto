@@ -1,0 +1,16 @@
+syntax="proto3";
+option go_package="github.com/AnshVM/orchestrator-service/user";
+
+message User {
+    string name = 1;
+    string class = 2;
+    int64 roll = 3;
+}
+
+message Username {
+    string name = 1;
+}
+
+service UserService {
+    rpc GetUserByName(Username) returns (User) {}
+}
