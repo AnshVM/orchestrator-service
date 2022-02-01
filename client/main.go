@@ -5,22 +5,22 @@ import (
 	"log"
 	"time"
 
-	dummy "github.com/AnshVM/orchestrator-service/datamock/Dummy"
+	user "github.com/AnshVM/orchestrator-service/User"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	conn, err := grpc.Dial("localhost:10000", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:9000", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Could not connect: %v", err)
 	}
 	defer conn.Close()
-	client := dummy.NewDummyDataServiceClient(conn)
+	client := user.NewUserServiceClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := client.GetMockUserData(ctx, &dummy.Username{Name: "Ansh"})
+	r, err := client.GetUserByName(ctx, &user.Username{Name: "AnshMalik"})
 	if err != nil {
 		log.Fatalf("Recieved error: %v", err)
 	}

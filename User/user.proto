@@ -13,4 +13,5 @@ message Username {
 
 service UserService {
     rpc GetUserByName(Username) returns (User) {}
+    rpc GetUser(Username) returns (User) {}
 }

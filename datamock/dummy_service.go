@@ -15,14 +15,16 @@ type server struct {
 	dummy.UnimplementedDummyDataServiceServer
 }
 
-func (s *server) GetMockUserData(ctx context.Context, name *dummy.Username) (*dummy.User, error) {
+func (s *server) GetMockUserData(ctx context.Context, name *dummy.DummyUsername) (*dummy.DummyUser, error) {
+	log.Printf("Recieved req on port 10000 GetMockUserData service")
+
 	if len(name.GetName()) < 6 {
 		return nil, errors.New("username is less than 6 characters")
 	}
-	user := dummy.User{
+	user := dummy.DummyUser{
 		Name:  name.GetName(),
-		Roll:  int64(len(name.GetName()) * 10),
 		Class: strconv.Itoa(len(name.GetName())),
+		Roll:  int64(len(name.GetName()) * 10),
 	}
 	return &user, nil
 }

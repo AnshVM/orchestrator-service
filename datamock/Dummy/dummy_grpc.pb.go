@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DummyDataServiceClient interface {
-	GetMockUserData(ctx context.Context, in *Username, opts ...grpc.CallOption) (*User, error)
+	GetMockUserData(ctx context.Context, in *DummyUsername, opts ...grpc.CallOption) (*DummyUser, error)
 }
 
 type dummyDataServiceClient struct {
@@ -29,8 +29,8 @@ func NewDummyDataServiceClient(cc grpc.ClientConnInterface) DummyDataServiceClie
 	return &dummyDataServiceClient{cc}
 }
 
-func (c *dummyDataServiceClient) GetMockUserData(ctx context.Context, in *Username, opts ...grpc.CallOption) (*User, error) {
-	out := new(User)
+func (c *dummyDataServiceClient) GetMockUserData(ctx context.Context, in *DummyUsername, opts ...grpc.CallOption) (*DummyUser, error) {
+	out := new(DummyUser)
 	err := c.cc.Invoke(ctx, "/DummyDataService/GetMockUserData", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (c *dummyDataServiceClient) GetMockUserData(ctx context.Context, in *Userna
 // All implementations must embed UnimplementedDummyDataServiceServer
 // for forward compatibility
 type DummyDataServiceServer interface {
-	GetMockUserData(context.Context, *Username) (*User, error)
+	GetMockUserData(context.Context, *DummyUsername) (*DummyUser, error)
 	mustEmbedUnimplementedDummyDataServiceServer()
 }
 
@@ -50,7 +50,7 @@ type DummyDataServiceServer interface {
 type UnimplementedDummyDataServiceServer struct {
 }
 
-func (UnimplementedDummyDataServiceServer) GetMockUserData(context.Context, *Username) (*User, error) {
+func (UnimplementedDummyDataServiceServer) GetMockUserData(context.Context, *DummyUsername) (*DummyUser, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMockUserData not implemented")
 }
 func (UnimplementedDummyDataServiceServer) mustEmbedUnimplementedDummyDataServiceServer() {}
@@ -67,7 +67,7 @@ func RegisterDummyDataServiceServer(s grpc.ServiceRegistrar, srv DummyDataServic
 }
 
 func _DummyDataService_GetMockUserData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Username)
+	in := new(DummyUsername)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func _DummyDataService_GetMockUserData_Handler(srv interface{}, ctx context.Cont
 		FullMethod: "/DummyDataService/GetMockUserData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DummyDataServiceServer).GetMockUserData(ctx, req.(*Username))
+		return srv.(DummyDataServiceServer).GetMockUserData(ctx, req.(*DummyUsername))
 	}
 	return interceptor(ctx, in, info, handler)
 }
