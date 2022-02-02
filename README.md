@@ -25,7 +25,11 @@ In a **new terminal** cd into the orchestrator-service repository and run the fo
     cd client
     go run main.go
     
- **OS system used for development**  - `Ubuntu - 20.04 (wsl)`
- **GOPATH** - `/home/ansh/Go`
+ ## Development environment 
+ 
+ **OS system used for development**  - `Ubuntu - 20.04 (wsl)` 
+ 
+ **GOPATH** - `/home/ansh/Go` 
+ 
  **Repository path on local** - `~/dev/orchestrator-service`
   
